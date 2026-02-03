@@ -20,7 +20,7 @@ const CategoryReportScreen = ({ navigation }) => {
   const categoryIcons = {
     Action: "flash",
     Comedy: "happy",
-    Drama: "theater",
+    Drama: "film",
     Horror: "skull",
     Romance: "heart",
     "Sci-Fi": "rocket",

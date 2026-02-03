@@ -14,6 +14,10 @@ import FavoriteYearsReport from "./src/screens/FavoriteYearsReport";
 import DashboardScreen from "./src/screens/DashboardScreen";
 import DataManagementScreen from "./src/screens/DataManagementScreen";
 
+import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
+import * as SQLite from "expo-sqlite";
+const db = SQLite.openDatabaseSync("movies.db");
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +75,7 @@ function ReportsStack() {
 }
 
 export default function App() {
+  useDrizzleStudio(db);
   return (
     <NavigationContainer>
       <Tab.Navigator
