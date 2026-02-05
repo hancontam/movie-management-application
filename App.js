@@ -1,3 +1,6 @@
+/**
+ * Author: Nguyễn Ngọc Hân CE180049 - SE1816
+ */
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -13,10 +16,6 @@ import CategoryReportScreen from "./src/screens/CategoryReportScreen";
 import FavoriteYearsReport from "./src/screens/FavoriteYearsReport";
 import DashboardScreen from "./src/screens/DashboardScreen";
 import DataManagementScreen from "./src/screens/DataManagementScreen";
-
-import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
-import * as SQLite from "expo-sqlite";
-const db = SQLite.openDatabaseSync("movies.db");
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -75,7 +74,6 @@ function ReportsStack() {
 }
 
 export default function App() {
-  useDrizzleStudio(db);
   return (
     <NavigationContainer>
       <Tab.Navigator

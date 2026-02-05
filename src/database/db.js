@@ -1,3 +1,6 @@
+/**
+ * Author: Nguyễn Ngọc Hân CE180049 - SE1816
+ */
 import * as SQLite from "expo-sqlite";
 
 const db = SQLite.openDatabaseSync("movies.db");

@@ -1,3 +1,6 @@
+/**
+ * Author: Nguyễn Ngọc Hân CE180049 - SE1816
+ */
 // src/screens/DashboardScreen.js
 import React, { useState, useCallback } from "react";
 import { View, Text, ScrollView, Dimensions, StyleSheet } from "react-native";

@@ -1,3 +1,6 @@
+/**
+ * Author: Nguyễn Ngọc Hân CE180049 - SE1816
+ */
 // src/screens/FavoriteYearsReport.js
 import React, { useState, useCallback } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";

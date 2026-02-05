@@ -1,3 +1,6 @@
+/**
+ * Author: Nguyễn Ngọc Hân CE180049 - SE1816
+ */
 // src/components/MovieCard.js
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";

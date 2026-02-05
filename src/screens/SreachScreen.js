@@ -1,3 +1,6 @@
+/**
+ * Author: Nguyễn Ngọc Hân CE180049 - SE1816
+ */
 // src/screens/SreachScreen.js
 import React, { useState, useEffect } from "react";
 import {
@@ -10,6 +13,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 import { searchMovies, filterMovies, getAllMovies } from "../database/db";
 import MovieCard from "../components/MovieCard";
 import { colors, commonStyles } from "../styles/commonStyles";
@@ -34,6 +38,22 @@ const SreachScreen = ({ navigation }) => {
   useEffect(() => {
     loadAllMovies();
   }, []);
+
+  // Reload movies when screen is focused (sau khi add/edit movie)
+  useFocusEffect(
+    React.useCallback(() => {
+      // Re-apply current filters/search when screen becomes visible
+      if (
+        searchQuery.trim() !== "" ||
+        selectedYear !== "" ||
+        selectedStatus !== ""
+      ) {
+        applyFilters(selectedYear, selectedStatus);
+      } else {
+        loadAllMovies();
+      }
+    }, [searchQuery, selectedYear, selectedStatus]),
+  );
 
   const loadAllMovies = () => {
     const allMovies = getAllMovies();

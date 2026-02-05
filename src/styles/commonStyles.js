@@ -1,3 +1,6 @@
+/**
+ * Author: Nguyễn Ngọc Hân CE180049 - SE1816
+ */
 // src/styles/commonStyles.js
 import { StyleSheet } from "react-native";
 

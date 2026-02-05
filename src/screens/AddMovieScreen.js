@@ -1,3 +1,6 @@
+/**
+ * Author: Nguyễn Ngọc Hân CE180049 - SE1816
+ */
 // src/screens/AddMovieScreen.js
 import React, { useState } from "react";
 import {
@@ -9,6 +12,7 @@ import {
   Alert,
   ScrollView,
   StyleSheet,
+  Modal,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
@@ -22,6 +26,8 @@ const AddMovieScreen = ({ navigation }) => {
   const [releaseYear, setReleaseYear] = useState("");
   const [status, setStatus] = useState("To Watch");
   const [posterUri, setPosterUri] = useState(null);
+  const [showUriModal, setShowUriModal] = useState(false);
+  const [uriInput, setUriInput] = useState("");
 
   const categories = [
     "Action",
@@ -80,6 +86,22 @@ const AddMovieScreen = ({ navigation }) => {
     }
   };
 
+  // Nhập URI từ clipboard hoặc text
+  const pasteImageUri = () => {
+    setUriInput("");
+    setShowUriModal(true);
+  };
+
+  const handleConfirmUri = () => {
+    if (uriInput && uriInput.trim()) {
+      setPosterUri(uriInput.trim());
+      setShowUriModal(false);
+      setUriInput("");
+    } else {
+      Alert.alert("Error", "Please enter a valid URI");
+    }
+  };
+
   // Hiển thị tùy chọn chọn ảnh hoặc chụp ảnh
   const showImageOptions = () => {
     Alert.alert("Select Poster", "Choose an option", [
@@ -90,6 +112,10 @@ const AddMovieScreen = ({ navigation }) => {
       {
         text: "Choose from Library",
         onPress: pickImageFromLibrary,
+      },
+      {
+        text: "Paste URI",
+        onPress: pasteImageUri,
       },
       {
         text: "Cancel",
@@ -226,6 +252,49 @@ const AddMovieScreen = ({ navigation }) => {
           <Text style={styles.saveButtonText}>Save Movie</Text>
         </TouchableOpacity>
       </View>
+
+      {/* URI Input Modal */}
+      <Modal
+        visible={showUriModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowUriModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Paste Image URI</Text>
+            <Text style={styles.modalSubtitle}>
+              Enter or paste the image URL:
+            </Text>
+            <TextInput
+              style={styles.modalInput}
+              placeholder="https://example.com/image.jpg"
+              value={uriInput}
+              onChangeText={setUriInput}
+              placeholderTextColor="#999"
+              autoFocus={true}
+              multiline={false}
+            />
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.cancelButton]}
+                onPress={() => {
+                  setShowUriModal(false);
+                  setUriInput("");
+                }}
+              >
+                <Text style={styles.cancelButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.confirmButton]}
+                onPress={handleConfirmUri}
+              >
+                <Text style={styles.confirmButtonText}>OK</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -313,6 +382,68 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginLeft: 8,
+  },
+  // Modal styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "#FFF",
+    borderRadius: 12,
+    padding: 20,
+    width: "85%",
+    maxWidth: 400,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.text,
+    marginBottom: 8,
+  },
+  modalSubtitle: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 15,
+  },
+  modalInput: {
+    borderWidth: 1,
+    borderColor: "#DDD",
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    backgroundColor: "#F9F9F9",
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 10,
+  },
+  modalButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    minWidth: 80,
+    alignItems: "center",
+  },
+  cancelButton: {
+    backgroundColor: "#F5F5F5",
+  },
+  cancelButtonText: {
+    color: "#666",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  confirmButton: {
+    backgroundColor: colors.primary,
+  },
+  confirmButtonText: {
+    color: "#FFF",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
 
